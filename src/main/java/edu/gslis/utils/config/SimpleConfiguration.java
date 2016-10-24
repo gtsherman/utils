@@ -8,10 +8,19 @@ import java.util.Scanner;
 
 public class SimpleConfiguration implements Configuration {
 	
+	public static final String SEPARATOR_COLON = ":";
+	public static final String SEPARATOR_PIPE = "|";
+	
 	private Map<String, String> config;
+	private String separator;
 	
 	public SimpleConfiguration() {
+		this(SEPARATOR_COLON);
+	}
+	
+	public SimpleConfiguration(String separator) {
 		this.config = new HashMap<String, String>();
+		this.separator = separator;
 	}
 	
 	public void read(String file) {
@@ -19,7 +28,7 @@ public class SimpleConfiguration implements Configuration {
 			Scanner scanner = new Scanner(new File(file));
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
-				String key = line.split(":")[0].trim();
+				String key = line.split(separator)[0].trim();
 				String value = line.substring(line.indexOf(key)+key.length()+1).trim();
 				
 				this.config.put(key, value);
