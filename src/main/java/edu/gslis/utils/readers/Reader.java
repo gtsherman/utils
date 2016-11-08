@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class Reader {
 	
+	public static final String WHITESPACE_DELIMITER = "\\s+";
 	public static final String SPACE_DELIMITER = " ";
 	public static final String TAB_DELIMITER = "\t";
 	public static final String COMMA_DELIMITER = ",";
@@ -20,7 +21,7 @@ public class Reader {
 	protected List<Map<String, String>> results; // one map per line in the file
 	
 	public Reader(List<String> fields) {
-		this(SPACE_DELIMITER, fields);
+		this(WHITESPACE_DELIMITER, fields);
 	}
 	
 	public Reader(String delimiter, List<String> fields) {
