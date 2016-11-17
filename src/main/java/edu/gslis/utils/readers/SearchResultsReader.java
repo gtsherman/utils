@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
+import edu.gslis.indexes.IndexWrapper;
+import edu.gslis.searchhits.IndexBackedSearchHit;
 import edu.gslis.searchhits.SearchHit;
 import edu.gslis.searchhits.SearchHits;
 import edu.gslis.searchhits.SearchHitsBatch;
@@ -18,12 +20,19 @@ public class SearchResultsReader extends Reader {
 	public static final String SCORE_FIELD = "SCORE";
 	public static final String RUN_FIELD = "RUN";
 	
+	private IndexWrapper index;
+	
 	private SearchHitsBatch resultsBatch;
 	
-	public SearchResultsReader(File file) {
+	public SearchResultsReader(File file, IndexWrapper index) {
 		super(Arrays.asList(QUERY_FIELD, Q0_FIELD, DOCNO_FIELD, RANK_FIELD, SCORE_FIELD, RUN_FIELD));
+		this.index = index;
 		read(file);
 		createSearchHitsBatch();
+	}
+
+	public SearchResultsReader(File file) {
+		this(file, null);
 	}
 	
 	public SearchHitsBatch getBatchResults() {
@@ -37,7 +46,7 @@ public class SearchResultsReader extends Reader {
 		
 		Iterator<Map<String, String>> tupleIt = results.iterator();
 		while (tupleIt.hasNext()) {
-			SearchHit hit = new SearchHit();
+			SearchHit hit = index == null ? new SearchHit() : new IndexBackedSearchHit(index);
 			
 			Map<String, String> tuple = tupleIt.next();
 			String query = tuple.get(QUERY_FIELD);
