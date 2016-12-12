@@ -25,10 +25,11 @@ public class SimpleConfigurationReader extends Reader {
 	
 	private void createConfigMap() {
 		config = new HashMap<String, String>();
-		Iterator<Map<String, String>> tupleIt = results.iterator();
+		Iterator<String[]> tupleIt = results.iterator();
 		while (tupleIt.hasNext()) {
-			Map<String, String> tuple = tupleIt.next();
-			config.put(tuple.get(KEY_FIELD), tuple.get(VALUE_FIELD));
+			String[] tuple = tupleIt.next();
+			config.put(valueOfField(KEY_FIELD, tuple),
+					valueOfField(VALUE_FIELD, tuple));
 		}
 	}
 	

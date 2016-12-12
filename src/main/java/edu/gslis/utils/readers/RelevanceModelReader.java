@@ -3,9 +3,7 @@ package edu.gslis.utils.readers;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Scanner;
 
 import edu.gslis.textrepresentation.FeatureVector;
@@ -37,29 +35,14 @@ public class RelevanceModelReader extends Reader {
 		try {
 			int l = 0;
 			Scanner scanner = new Scanner(file);
-			while (scanner.hasNextLine()) {
+			while (scanner.hasNextLine() && l < count) {
 				l++;
-				if (l > count) {
-					break;
-				}
-
 				String line = scanner.nextLine();
-				
-				Map<String, String> field = new HashMap<String, String>();
-
 				String[] parts = line.split(delimiter);
 				for (int i = 0; i < parts.length; i++) {
-					String fieldValue = parts[i].trim();
-					String fieldName;
-					try {
-						fieldName = fields.get(i);
-					} catch (IndexOutOfBoundsException e) {
-						fieldName = "Field"+i;
-					}
-					field.put(fieldName, fieldValue);
+					parts[i] = parts[i].trim();
 				}
-				
-				results.add(field);
+				results.add(parts);
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {
@@ -69,10 +52,11 @@ public class RelevanceModelReader extends Reader {
 	
 	private void createFeatureVector() {
 		vector = new FeatureVector(null);
-		Iterator<Map<String, String>> tupleIt = results.iterator();
+		Iterator<String[]> tupleIt = results.iterator();
 		while (tupleIt.hasNext()) {
-			Map<String, String> termTuple = tupleIt.next();
-			vector.addTerm(termTuple.get(TERM_FIELD), Double.parseDouble(termTuple.get(SCORE_FIELD)));
+			String[] termTuple = tupleIt.next();
+			vector.addTerm(valueOfField(TERM_FIELD, termTuple),
+					Double.parseDouble(valueOfField(SCORE_FIELD, termTuple)));
 		}
 	}
 
