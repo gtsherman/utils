@@ -4,7 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.gslis.utils.readers.SimpleConfigurationReader;
+import edu.gslis.utils.data.interpreters.ConfigurationDataInterpreter;
+import edu.gslis.utils.data.sources.FileDataSource;
 
 public class SimpleConfiguration implements Configuration {
 	
@@ -23,15 +24,18 @@ public class SimpleConfiguration implements Configuration {
 		this.separator = separator;
 	}
 	
+	@Override
 	public void read(String file) {
-		SimpleConfigurationReader reader = new SimpleConfigurationReader(separator, new File(file));
-		config = reader.getConfigMap();
+		ConfigurationDataInterpreter reader = new ConfigurationDataInterpreter();
+		config = reader.build(new FileDataSource(new File(file), separator));
 	}
 
+	@Override
 	public String get(String key) {
 		return this.config.keySet().contains(key) ? this.config.get(key) : null;
 	}
 
+	@Override
 	public void set(String key, String value) {
 		this.config.put(key, value);
 	}
