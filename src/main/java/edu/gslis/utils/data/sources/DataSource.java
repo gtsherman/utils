@@ -11,6 +11,11 @@ import java.util.List;
  * and fill it with data manually, this class is designed to be subclassed by
  * classes that handle the reading in of data themselves.
  * 
+ * <p>It is easiest to conceive of each <code>DataSource</code> object as 
+ * accessing only one type of data. This is because it will introduce bugs if
+ * a {@link DataInterpreter} retains a reference to a <code>DataSource</code>
+ * that has been reused to store a different type of data.
+ * 
  * @author Garrick
  *
  */
