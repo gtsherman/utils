@@ -12,8 +12,9 @@ import edu.gslis.searchhits.SearchHitsBatch;
 import edu.gslis.utils.data.sources.DataSource;
 
 public class SearchResultsDataInterpreter extends DataInterpreter {
+	
+	public static final String DATA_NAME = "search_results";
 
-	// Fields
 	public static final String QUERY_FIELD = "QUERY";
 	public static final String Q0_FIELD = "Q0";
 	public static final String DOCNO_FIELD = "DOCNO";

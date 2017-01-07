@@ -9,7 +9,8 @@ import edu.gslis.utils.data.sources.DataSource;
 
 public class RelevanceModelDataInterpreter extends DataInterpreter {
 
-	// Fields
+	public static final String DATA_NAME = "relevance_model";
+
 	public static final String TERM_FIELD = "TERM";
 	public static final String SCORE_FIELD = "SCORE";
 	public static final List<String> ALL_FIELDS = Arrays.asList(

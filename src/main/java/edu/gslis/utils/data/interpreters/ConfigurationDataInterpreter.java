@@ -9,8 +9,9 @@ import java.util.Map;
 import edu.gslis.utils.data.sources.DataSource;
 
 public class ConfigurationDataInterpreter extends DataInterpreter {
+	
+	public static final String DATA_NAME = "configuration";
 
-	// Fields
 	public static final String KEY_FIELD = "KEY";
 	public static final String VALUE_FIELD = "VALUE";
 	public static final List<String> ALL_FIELDS = Arrays.asList(
