@@ -2,8 +2,10 @@ package edu.gslis.utils.data.sources;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -83,7 +85,7 @@ public class DatabaseDataSource extends DataSource {
 	}
 	
 	public void read(String... conditions) {
-		read(Arrays.asList(ANYTHING));
+		read(Arrays.asList(ANYTHING), conditions);
 	}
 	
 	public void read(List<String> fields, String... conditions) {
@@ -120,6 +122,16 @@ public class DatabaseDataSource extends DataSource {
 		try {
 			statement = connection.createStatement();
 			ResultSet sqlResults = statement.executeQuery(dbQuery);
+
+			// If we have run select *, we need to adjust it
+			if (fields.size() == 1 && fields.get(0).equals(ANYTHING)) {
+				fields = new ArrayList<String>();
+				ResultSetMetaData rsm = sqlResults.getMetaData();
+				for (int i = 1; i <= rsm.getColumnCount(); i++) {
+					fields.add(i-1, rsm.getColumnName(i));
+				}
+			}
+		
 			while (sqlResults.next()) {
 				String[] tuple = new String[fields.size()];
 				for (int i = 0; i < fields.size(); i++) {
