@@ -7,7 +7,7 @@ import java.util.List;
 import edu.gslis.textrepresentation.FeatureVector;
 import edu.gslis.utils.data.sources.DataSource;
 
-public class RelevanceModelDataInterpreter extends DataInterpreter {
+public class RelevanceModelDataInterpreter extends DataInterpreter implements FeatureVectorBuilder {
 
 	public static final String DATA_NAME = "relevance_model";
 
@@ -19,8 +19,16 @@ public class RelevanceModelDataInterpreter extends DataInterpreter {
 	// Default parameters
 	public static final int DEFAULT_TERM_COUNT = 20;
 	
+	public RelevanceModelDataInterpreter(List<String> fields) {
+		super(fields);
+	}
+	
+	public RelevanceModelDataInterpreter(String... fields) {
+		this(Arrays.asList(fields));
+	}
+	
 	public RelevanceModelDataInterpreter() {
-		super(ALL_FIELDS);
+		this(ALL_FIELDS);
 	}
 	
 	@Override
