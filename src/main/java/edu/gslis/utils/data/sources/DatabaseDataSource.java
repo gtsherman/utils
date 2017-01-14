@@ -1,6 +1,7 @@
 package edu.gslis.utils.data.sources;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -36,6 +37,27 @@ public class DatabaseDataSource extends DataSource {
 	public DatabaseDataSource(Connection connection, String table) {
 		this.connection = connection;
 		setTable(table);
+	}
+	
+	/**
+	 * Get a database connection
+	 * 
+	 * <p>Currently only works with SQLite, but should be fleshed out in the
+	 * future.
+	 * 
+	 * @param dbName The name of the database you want to connect to
+	 * @return The JDBC Connection object
+	 */
+	public static Connection getConnection(String dbName) {
+		Connection con;
+		try {
+			con = DriverManager.getConnection("jdbc:sqlite://" + dbName);
+		} catch (SQLException e) {
+			System.err.println("Error connecting to database " + dbName);
+			e.printStackTrace(System.err);
+			con = null;
+		}
+		return con;
 	}
 	
 	/**
