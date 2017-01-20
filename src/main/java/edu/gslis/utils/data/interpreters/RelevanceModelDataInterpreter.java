@@ -7,7 +7,7 @@ import java.util.List;
 import edu.gslis.textrepresentation.FeatureVector;
 import edu.gslis.utils.data.sources.DataSource;
 
-public class RelevanceModelDataInterpreter extends DataInterpreter implements FeatureVectorBuilder {
+public class RelevanceModelDataInterpreter extends DataInterpreter {
 
 	public static final String DATA_NAME = "relevance_model";
 
