@@ -110,6 +110,10 @@ public class DatabaseDataSource extends DataSource {
 		read(Arrays.asList(ANYTHING), conditions);
 	}
 	
+	public void read(int limit, String... conditions) {
+		read(limit, Arrays.asList(ANYTHING), conditions);
+	}
+	
 	public void read(List<String> fields, String... conditions) {
 		read(-1, fields, conditions);
 	}
