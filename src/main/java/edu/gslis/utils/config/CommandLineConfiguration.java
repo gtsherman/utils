@@ -55,7 +55,7 @@ public class CommandLineConfiguration implements Configuration {
 			// If help is requested, show it and quit the program
 			if (cmd.hasOption(HELP)) {
 				HelpFormatter help = new HelpFormatter();
-				help.printHelp("", options);
+				help.printHelp("gnu", options);
 				System.exit(0);
 			}
 			
